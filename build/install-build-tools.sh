@@ -50,17 +50,17 @@ yum install -y wget
 
 # Java 1.8.0_131
 #
-echo "Dependency check: Java JDK 1.8.0_131"
+echo "Dependency check: Java JDK 1.8.0_181"
 
-if [[ $($JAVA_HOME/bin/javac -version 2>&1) != "javac 1.8.0_131" ]]; then
-    echo "WARN: Unable to find JDK 1.8.0_131, going to download it and set JAVA_HOME relative to ${PWD}"
-    curl -LOJ -b oraclelicense=accept-securebackup-cookie "${JAVA_MIRROR:-http://download.oracle.com/otn-pub/java/jdk/8u131-b11/d54c1d3a095b4ff2b6607d096fa80163/jdk-8u131-linux-x64.tar.gz}"
-    tar zxf jdk-8u131-linux-x64.tar.gz --no-same-owner
-    export JAVA_HOME=${PWD}/jdk1.8.0_131
+if [[ $($JAVA_HOME/bin/javac -version 2>&1) != "javac 1.8.0_181" ]]; then
+    echo "WARN: Unable to find JDK 1.8.0_181, going to download it and set JAVA_HOME relative to /usr/lib/jvm/"
+    yum install -y java-1.8.0-openjdk-devel-1.8.0.181-3.b13.el7_5
+    export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.181-3.b13.el7_5.x86_64
     export PATH=$JAVA_HOME/bin:${PATH}
-
     echo "JAVA_HOME set to ${JAVA_HOME}"
     echo "PATH adjusted to ${PATH}"
+
+
     echo
     echo "Please adjust these variables if required for your environment"
     echo "It's recommended that you append these lines to /etc/environment to make Java generally available"
@@ -70,7 +70,7 @@ else
     echo "Java found at ${JAVA_HOME}"
 fi
 
-[[ $($JAVA_HOME/bin/javac -version 2>&1) != "javac 1.8.0_131" ]] && exit -1
+[[ $($JAVA_HOME/bin/javac -version 2>&1) != "javac 1.8.0_181" ]] && exit -1
 
 # Packages required to carry out builds and tests
 #
